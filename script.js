@@ -1,77 +1,155 @@
-const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav-links');
-const navLinks = document.querySelectorAll('.nav-links li');
+const ctx = document.getElementById('grafikTugas3').getContext('2d');
 
-burger.addEventListener('click', () => {
-  // Toggle nav
-  nav.classList.toggle('nav-active');
+// Track berdasarkan Tugas 1 kamu
+const trackRequests = [
+    1600, 1050, 1775, 1950, 10, 825, 75, 1300, 1450, 600, 900,
+    1600, 1050, 30, 1900, 2004, 700, 1300, 55, 425, 89, 700, 1600, 200
+];
 
-  // Burger animation
-  burger.classList.toggle('toggle');
-  
-  // Animate links
-  navLinks.forEach((link, index) => {
-    if (link.style.animation) {
-      link.style.animation = '';
-    } else {
-      link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+const headStart = 1234;
+
+// Fungsi membantu
+function fcfs(trackList, start) {
+    return [start, ...trackList];
+}
+
+function sstf(trackList, start) {
+    const visited = [];
+    let current = start;
+    let pending = [...trackList];
+
+    while (pending.length > 0) {
+        let closestIdx = 0;
+        let minDistance = Math.abs(pending[0] - current);
+        for (let i = 1; i < pending.length; i++) {
+            if (Math.abs(pending[i] - current) < minDistance) {
+                closestIdx = i;
+                minDistance = Math.abs(pending[i] - current);
+            }
+        }
+        current = pending.splice(closestIdx, 1)[0];
+        visited.push(current);
     }
-  });
-});
+    return [start, ...visited];
+}
 
-// Tambahkan smooth scrolling pada semua tautan navigasi
-document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-  
-      const targetID = this.getAttribute('href').substring(1);
-      const targetSection = document.getElementById(targetID);
-  
-      targetSection.scrollIntoView({
-        behavior: 'smooth'
-      });
-    });
-  });
-  
+function scan(trackList, start, diskSize = 2000) {
+    const allTracks = [...trackList, start].sort((a, b) => a - b);
+    const startIdx = allTracks.indexOf(start);
 
-// Keyframes animation
-const styleSheet = document.styleSheets[0];
-styleSheet.insertRule(`
-  @keyframes navLinkFade {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
+    const ascending = allTracks.slice(startIdx);
+    const descending = allTracks.slice(0, startIdx).reverse();
+    return [...ascending, ...descending];
+}
+
+function look(trackList, start) {
+    const allTracks = [...trackList, start].sort((a, b) => a - b);
+    const startIdx = allTracks.indexOf(start);
+
+    const ascending = allTracks.slice(startIdx);
+    const descending = allTracks.slice(0, startIdx).reverse();
+    return [...ascending, ...descending];
+}
+
+function cscan(trackList, start, diskSize = 2000) {
+    const allTracks = [...trackList, start].sort((a, b) => a - b);
+    const startIdx = allTracks.indexOf(start);
+
+    const ascending = allTracks.slice(startIdx);
+    const wrapAround = allTracks.slice(0, startIdx);
+    return [...ascending, diskSize, 0, ...wrapAround];
+}
+
+function clook(trackList, start) {
+    const allTracks = [...trackList, start].sort((a, b) => a - b);
+    const startIdx = allTracks.indexOf(start);
+
+    const ascending = allTracks.slice(startIdx);
+    const wrapAround = allTracks.slice(0, startIdx);
+    return [...ascending, ...wrapAround];
+}
+
+// Mengisi data dataset grafik
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Array.from({ length: 25 }, (_, i) => `Langkah ${i + 1}`),
+        datasets: [
+            {
+                label: 'PTPD (FCFS)',
+                data: fcfs(trackRequests, headStart),
+                borderColor: 'orange',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            },
+            {
+                label: 'SSTF',
+                data: sstf(trackRequests, headStart),
+                borderColor: 'red',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            },
+            {
+                label: 'SCAN (Elevator)',
+                data: scan(trackRequests, headStart),
+                borderColor: 'magenta',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            },
+            {
+                label: 'LOOK',
+                data: look(trackRequests, headStart),
+                borderColor: 'purple',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            },
+            {
+                label: 'C-SCAN',
+                data: cscan(trackRequests, headStart),
+                borderColor: 'blue',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            },
+            {
+                label: 'C-LOOK',
+                data: clook(trackRequests, headStart),
+                borderColor: 'cyan',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 3
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Grafik Perjalanan Head Disk Scheduling'
+            },
+            legend: {
+                display: true,
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                title: {
+                    display: true,
+                    text: 'Posisi Track'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Langkah Ke-'
+                }
+            }
+        }
     }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-`, styleSheet.cssRules.length);
-
-// Animasi ketika bagian "Tentang Saya" muncul di layar
-const aboutSection = document.querySelector('.about');
-const galleryPhotos = document.querySelectorAll('.gallery .photo');
-
-window.addEventListener('scroll', () => {
-  const sectionPos = aboutSection.getBoundingClientRect().top;
-  const screenPos = window.innerHeight / 1.2;
-
-  if (sectionPos < screenPos) {
-    galleryPhotos.forEach(photo => {
-      photo.style.opacity = '1';
-      photo.style.transform = 'scale(1)';
-    });
-  }
-});
-
-// Function to add fade-in effect to all text elements
-document.addEventListener("DOMContentLoaded", function () {
-  const textElements = document.querySelectorAll(".text-section h1, .text-section p, .section-heading, .text-content");
-
-  textElements.forEach((el, index) => {
-    setTimeout(() => {
-      el.classList.add("fade-in-text");
-    }, index * 200); // Delay each element for a staggered effect
-  });
 });
