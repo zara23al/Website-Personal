@@ -1,346 +1,158 @@
-/* Reset CSS */
-* {
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body styling */
-  body {
-    font-family: 'Arnaud', sans-serif;
-    color: black;
-    background-color: white;
-  }
-  
-  /* Navigasi styling */
-  nav {
+    background-color: #fdf8f4;
+    color: #4a4a4a;
+}
+
+header {
+    background-color: #d1c4b8;
+    color: #fff;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: black;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    color: white;
-  }
-  
-  .nav-links {
-    display: flex;
-    list-style: none;
-  }
-  
-  .nav-links li {
-    margin-left: 1.5rem;
-    position: relative;
-  }
-  
-  .nav-links li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: color 0.3s ease-in-out;
-  }
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  /* Sticky Navigation */
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Pastikan navigasi tetap di atas elemen lainnya */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk memisahkan dari konten */
-  }
-  
-  /* Memberi padding-top pada body agar konten tidak tertutup oleh navigasi */
-  body {
-    padding-top: 70px; /* Sesuaikan dengan tinggi navigasi */
-  }
-  
-  
-  /* Efek menyala */
-  .nav-links li a:hover {
-    color: #FFD700;
-    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700;
-  }
-  
-  /* Burger menu styling */
-  .burger {
-    display: none;
-    cursor: pointer;
-  }
-  
-  .burger div {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 5px;
-    transition: all 0.3s ease;
-  }
-  
-  /* Section Home */
-  .home {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-left: 2rem;
-    background-color: white;
-  }
-  
-  .home h1 {
-    font-size: 3rem;
-    color: black;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .nav-links {
-      position: absolute;
-      right: 0;
-      height: 100vh;
-      top: 0;
-      background-color: black;
-      flex-direction: column;
-      align-items: center;
-      width: 50%;
-      transform: translateX(100%);
-      transition: transform 0.5s ease-in;
-    }
-  
-    .nav-links li {
-      margin: 2rem 0;
-    }
-  
-    .nav-active {
-      transform: translateX(0);
-    }
-  
-    .burger {
-      display: block;
-    }
-  
-    .burger.toggle .line1 {
-      transform: rotate(-45deg) translate(-5px, 6px);
-    }
-  
-    .burger.toggle .line2 {
-      opacity: 0;
-    }
-  
-    .burger.toggle .line3 {
-      transform: rotate(45deg) translate(-5px, -6px);
-    }
-  
-    .home h1 {
-      font-size: 2rem;
-    }
-  
-    .nav-links li a {
-      font-size: 1.3rem;
-    }
-  }
-/* Tentang Saya */
-.about {
-    padding: 4rem 2rem;
-    background-color: rgb(64, 83, 76);
+header nav a {
     color: #fff;
-  }
-  
-  .about .content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .about h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #fff;
-  }
-  
-  .about p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-  
- /* Galeri Foto */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    padding-top: 2rem;
-  }
-  
-  .gallery .photo {
-    overflow: hidden;
-    width: 100%;
-    padding-top: 100%; /* Menjaga rasio persegi */
-    position: relative;
-    background-color: #ddd; /* Background sementara jika foto belum muncul */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .gallery .photo img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  
-  .gallery .photo:hover img {
-    transform: scale(1.1); /* Efek zoom */
-  }
-  
-  .gallery .photo:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .gallery {
-      grid-template-columns: 1fr; /* Tampilkan satu kolom pada layar kecil */
-    }
-  }
-  
-  /* Tugas Kuliah */
-.tugas {
-    padding: 4rem 2rem;
-    background-color: #e8f5e9;
-  }
-  
-  .tugas h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 2rem;
-  }
-  
-  .assignment-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-  
-  .assignment {
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-  
-  .assignment:hover {
-    transform: scale(1.05);
-  }
-  
-  .photo {
-    width: 100%;
-    padding-top: 75%; /* Menjaga rasio 4:3 */
-    position: relative;
-  }
-  
-  .photo img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .description {
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  .description p {
-    margin: 0.5rem 0;
-  }
-  
-  .link-tugas {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    color: white;
-    background-color: #333;
     text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .link-tugas:hover {
-    background-color: #555;
-  }
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
 
-  /* Kontak Saya */
-.contact {
-    padding: 4rem 2rem;
-    background-color: #f0f0f0;
+header nav a:hover {
+    color: #ffe3d3;
+}
+
+section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+#home {
     text-align: center;
-  }
-  
-  .contact h2 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-  }
-  
-  .contact-info p {
-    font-size: 1.2rem;
-    color: #555;
-    margin: 0.5rem 0;
-  }
-  
-  .contact-info a {
-    color: #0077cc;
-    text-decoration: none;
-  }
-  
-  .contact-info a:hover {
-    text-decoration: underline;
-  }
+    animation: fadeIn 2s;
+}
 
-  /* Fade-in animation */
+#home img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+}
+
+#home h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #4a4a4a;
+}
+
+#home p {
+    font-size: 18px;
+    color: #6b6b6b;
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.fade-in-text {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
+#tasks {
+    padding: 20px 0;
 }
 
-  
-  /* Efek 3D pada Gambar */
-  .contact-image {
-    margin-top: 2rem;
-    perspective: 1000px;
-  }
-  
-  .contact-image img {
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.6s ease;
-  }
-  
-  .contact-image img:hover {
-    transform: rotateY(15deg) rotateX(10deg) scale(1.05); /* Efek 3D */
-  }
-  
-    
+.task-section {
+    margin-bottom: 30px;
+}
+
+.task-section h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+}
+
+.task-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.task-item {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.task-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #eee;
+}
+
+.task-item p {
+    padding: 10px;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
+.task-item:hover {
+    transform: scale(1.05);
+}
+
+#contact {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#contact h2 {
+    font-family: 'Playfair Display', serif;
+    color: #4a4a4a;
+}
+
+#contact a {
+    display: inline-block;
+    margin: 10px;
+    color: #6b6b6b;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#contact a:hover {
+    color: #d1a27c;
+}
+
+@media (max-width: 768px) {
+    .task-item {
+        flex: 1 1 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .task-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
